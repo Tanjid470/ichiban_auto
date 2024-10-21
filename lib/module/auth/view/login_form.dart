@@ -178,7 +178,14 @@ class _LoginFormState extends State<LoginForm> {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: Colors.blueAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black87,
+                        offset: Offset(1, 2)
+                      )
+                    ]
+                ),
                 child: TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
