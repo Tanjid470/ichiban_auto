@@ -5,7 +5,8 @@ import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 
 import '../../const/dynamic_font.dart';
-import '../booking/car_service_booking.dart';
+import '../booking/view/car_service_booking_screen.dart';
+
 
 
 class HomeScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CarServiceForm()),
+                  MaterialPageRoute(builder: (context) =>const CarServiceForm()),
                 );
 
               },
