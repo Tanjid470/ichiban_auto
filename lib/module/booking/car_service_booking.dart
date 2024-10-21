@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ichiban_auto/config/responsive_scale.dart';
+import 'package:ichiban_auto/const/app_color.dart';
+
+import '../../const/dynamic_font.dart';
 
 class CarServiceForm extends StatefulWidget {
   const CarServiceForm({super.key});
@@ -47,10 +51,15 @@ class CarServiceFormState extends State<CarServiceForm> {
           key: _formKey,
           child: ListView(
             children: [
-              const Text("Car Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Car Details", style: TextStyle(fontSize: TextSize.font22(context),
+                  fontWeight: FontWeight.bold,
+                color: AppColors.baseColorRed,
+
+              )),
+              ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Car Make',
+                  labelText: 'Brand',
                   border: OutlineInputBorder(),
                 ),
                 onSaved: (value) => carMake = value,
@@ -58,7 +67,7 @@ class CarServiceFormState extends State<CarServiceForm> {
               const SizedBox(height: 10),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Car Model',
+                  labelText: 'Model',
                   border: OutlineInputBorder(),
                 ),
                 onSaved: (value) => carModel = value,
@@ -66,7 +75,7 @@ class CarServiceFormState extends State<CarServiceForm> {
               const SizedBox(height: 10),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Car Year',
+                  labelText: 'Year',
                   border: OutlineInputBorder(),
                 ),
                 onSaved: (value) => carYear = value,
@@ -82,24 +91,25 @@ class CarServiceFormState extends State<CarServiceForm> {
               const SizedBox(height: 16),
 
               // Customer Details Section
-              const Text("Customer Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Customer Details", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Customer Name',
+                  labelText: 'Customer name',
                   border: OutlineInputBorder(),
                 ),
                 onSaved: (value) => customerName = value,
               ),
-
+              const SizedBox(height: 10),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Phone Number',
+                  labelText: 'Contact number',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
                 onSaved: (value) => phoneNumber = value,
               ),
-
+              const SizedBox(height: 10),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Email',
@@ -111,7 +121,9 @@ class CarServiceFormState extends State<CarServiceForm> {
 
 
               // Booking Details Section
-              const Text("Booking Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text("Booking Details", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Booking Title',
@@ -120,26 +132,43 @@ class CarServiceFormState extends State<CarServiceForm> {
                 onSaved: (value) => bookingTitle = value,
               ),
               const SizedBox(height: 10),
-              ListTile(
-                title: Text(startDateTime == null
-                    ? 'Select Start DateTime'
-                    : 'Start: ${startDateTime.toString()}'),
-                trailing: Icon(Icons.calendar_today),
-                onTap: () => _selectDateTime(context, true),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.baseColorGrey),
+                  borderRadius: BorderRadius.circular(5), // Apply border radius here
+                ),
+                child: ListTile(
+                  title: Text(startDateTime == null
+                      ? 'Select Start DateTime'
+                      : 'Start: ${startDateTime.toString()}'),
+                  trailing: const Icon(Icons.calendar_today),
+                  onTap: () => _selectDateTime(context, true),
+                ),
               ),
-              ListTile(
-                title: Text(endDateTime == null
-                    ? 'Select End DateTime'
-                    : 'End: ${endDateTime.toString()}'),
-                trailing: Icon(Icons.calendar_today),
-                onTap: () => _selectDateTime(context, false),
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.baseColorGrey),
+                  borderRadius: BorderRadius.circular(5), // Apply border radius here
+                ),
+                child: ListTile(
+                  title: Text(
+                    endDateTime == null
+                        ? 'Select End DateTime'
+                        : 'End: ${endDateTime.toString()}',
+                  ),
+                  trailing: const Icon(Icons.calendar_month_sharp),
+                  onTap: () => _selectDateTime(context, false),
+                ),
               ),
-              SizedBox(height: 16),
+
+              const SizedBox(height: 16),
 
               // Mechanic Assignment Section
-              Text("Assign Mechanic", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Assign Mechanic", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              ResponsiveScale.of(context).verticalGap(context, 1.5),
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Assign Mechanic',
                   border: OutlineInputBorder(),
                 ),
@@ -155,20 +184,47 @@ class CarServiceFormState extends State<CarServiceForm> {
                   });
                 },
               ),
-              SizedBox(height: 16),
-
-              // Submit Button
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Process the form data
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Booking Submitted')));
-                  }
-                },
-                child: Text('Submit'),
+              const SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.baseColorRed,
+                      AppColors.baseColorRed,
+                    ], // Replace with your desired gradient colors
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.baseColorGrey,
+                      offset: Offset(2, 2.5)
+                    )
+                  ]
+                ),
+                child: InkWell(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // Process the form data
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Booking Submitted')));
+                    }
+                  },
+                  child: Text('Submit',
+                    style: TextStyle(color: Colors.white,
+                      fontSize: TextSize.font22(context),
+                      fontWeight: FontWeight.w800
+                    ),
+                    
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
+
             ],
           ),
         ),
