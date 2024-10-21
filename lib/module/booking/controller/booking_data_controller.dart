@@ -11,4 +11,27 @@ class BookingDataController extends GetxController{
   TextEditingController emailController = TextEditingController();
   TextEditingController bookingTitleController = TextEditingController();
 
+  void clearAllControllers() {
+    carMakeController.clear();
+    carModelController.clear();
+    carYearController.clear();
+    registrationPlateController.clear();
+    customerNameController.clear();
+    phoneNumberController.clear();
+    emailController.clear();
+    bookingTitleController.clear();
+  }
+
+  @override
+  void onClose() {
+    carMakeController.dispose();
+    carModelController.dispose();
+    carYearController.dispose();
+    registrationPlateController.dispose();
+    customerNameController.dispose();
+    phoneNumberController.dispose();
+    emailController.dispose();
+    bookingTitleController.dispose();
+    super.onClose();
+  }
 }
