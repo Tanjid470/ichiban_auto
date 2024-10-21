@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/module/auth/service/firebase_auth.dart';
 
@@ -43,7 +44,6 @@ class _LoginFormState extends State<LoginForm> {
               login
                   ? Container()
                   : TextFormField(
-
                       key: const ValueKey('fullName'),
                       decoration: const InputDecoration(
                         hintText: 'Enter your name',
@@ -72,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                     ),
 
-
+              ResponsiveScale.of(context).verticalGap(context, 1),
               TextFormField(
                 key: const ValueKey('email'),
                 decoration: const InputDecoration(
@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
                   });
                 },
               ),
-
+              ResponsiveScale.of(context).verticalGap(context, 1),
               TextFormField(
                 key: const ValueKey('password'),
                 obscureText: true,
