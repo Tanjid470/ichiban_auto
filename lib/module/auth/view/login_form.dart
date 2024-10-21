@@ -43,9 +43,20 @@ class _LoginFormState extends State<LoginForm> {
               login
                   ? Container()
                   : TextFormField(
+
                       key: const ValueKey('fullName'),
                       decoration: const InputDecoration(
                         hintText: 'Enter your name',
+                        border: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey), // Border when not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue), // Border when focused
+                        ),
+                        hintTextDirection: TextDirection.ltr,
+                        hintStyle: TextStyle(color: Colors.grey)
+
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -61,10 +72,20 @@ class _LoginFormState extends State<LoginForm> {
                       },
                     ),
 
+
               TextFormField(
                 key: const ValueKey('email'),
                 decoration: const InputDecoration(
-                  hintText: 'Enter Email',
+                  hintText: 'Enter email',
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey), // Border when not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue), // Border when focused
+                    ),
+                    hintTextDirection: TextDirection.ltr,
+                    hintStyle: TextStyle(color: Colors.grey)
                 ),
                 validator: (value) {
                   if (value!.isEmpty || !value.contains('@')) {
@@ -85,6 +106,15 @@ class _LoginFormState extends State<LoginForm> {
                 obscureText: true,
                 decoration: const InputDecoration(
                   hintText: 'Enter password',
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey), // Border when not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue), // Border when focused
+                    ),
+                    hintTextDirection: TextDirection.ltr,
+                    hintStyle: TextStyle(color: Colors.grey)
                 ),
                 validator: (value) {
                   if (value!.length < 6) {
@@ -99,9 +129,7 @@ class _LoginFormState extends State<LoginForm> {
                   });
                 },
               ),
-              const SizedBox(
-                height: 2,
-              ),
+
               !login
                   ? Container()
                   : Row(
