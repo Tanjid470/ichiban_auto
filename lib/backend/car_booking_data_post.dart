@@ -1,8 +1,10 @@
 
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:gsheets/gsheets.dart';
-import 'package:ichiban_auto/backend/car_booking_model.dart';
+import 'package:ichiban_auto/module/booking/model/car_booking_model.dart';
 import 'google_sheet_init.dart';
 
 class CarBookingDataPost{
@@ -37,6 +39,12 @@ class CarBookingDataPost{
     }
     _carBookingSheet!.values.map.appendRows(rowList);
     SmartDialog.dismiss();
+    Get.snackbar('Car Booking Successfully', 'Those data added into google sheet',
+        duration: const Duration(seconds: 3),
+        backgroundColor: const Color(0xffC9EFDE),
+        colorText: Colors.black,
+        icon: const Icon(Icons.offline_pin_outlined,color: Color(0xff14452F),),
+        snackPosition: SnackPosition.TOP);
     return true;
   }
 
