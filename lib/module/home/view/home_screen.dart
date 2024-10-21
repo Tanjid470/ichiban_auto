@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 
-import '../../const/dynamic_font.dart';
-import '../booking/view/car_service_booking_screen.dart';
+import '../../../const/dynamic_font.dart';
+import '../../booking/view/car_service_booking_screen.dart';
 
 
 

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/module/auth/view/login_form.dart';
-import 'package:ichiban_auto/module/home/home_screen.dart';
+import 'package:ichiban_auto/module/home/view/home_screen.dart';
 
 
 
