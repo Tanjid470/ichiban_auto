@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:ichiban_auto/backend/car_booking_data_post.dart';
-import 'package:ichiban_auto/backend/car_booking_model.dart';
+import 'package:ichiban_auto/module/booking/model/car_booking_model.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/module/booking/controller/booking_data_controller.dart';
@@ -192,9 +192,9 @@ class CarServiceFormState extends State<CarServiceForm> {
               ),
               const SizedBox(height: 16),
               InkWell(
-                onTap: () async{
-                  await CarBookingDataPost.inti();
+                onTap: () async {
                   SmartDialog.showLoading();
+                  await CarBookingDataPost.inti();
                   final carBookingDataMap = {
                     CarBookingModel.brand : bookingDataController.carMakeController.text,
                     CarBookingModel.model : bookingDataController.carModelController.text,
@@ -209,6 +209,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                     CarBookingModel.assignMechanic : assignedMechanicController.toString(),
                   };
                   await CarBookingDataPost.insert([carBookingDataMap]);
+                  bookingDataController.clearAllControllers();
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
