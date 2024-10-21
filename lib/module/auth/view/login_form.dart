@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
-import 'package:ichiban_auto/global/animated_text.dart';
 import 'package:ichiban_auto/module/auth/service/firebase_auth.dart';
 
 class LoginForm extends StatefulWidget {
