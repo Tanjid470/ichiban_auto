@@ -53,4 +53,9 @@ class ScalingQuery {
   double wp(size) {
     return (_shortDimension * size) / 100;
   }
+  SizedBox verticalGap(BuildContext context,double ratio) =>
+      SizedBox(height: ResponsiveScale.of(context).hp(ratio));
+
+  SizedBox horizontalGap(BuildContext context,double ratio) =>
+      SizedBox(height: ResponsiveScale.of(context).hp(ratio));
 }
