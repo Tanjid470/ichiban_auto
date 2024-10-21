@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/module/auth/view/login_form.dart';
 import 'package:ichiban_auto/module/booking/car_service_booking.dart';
+import 'package:ichiban_auto/module/home/home_screen.dart';
 
 
 
@@ -35,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return  CarServiceForm();
+                return const HomeScreen();
               } else {
                 return const LoginForm();
               }
