@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 class AuthServices {
   static signupUser(String email, String password, String name, BuildContext context) async {
     try {
-
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      await userCredential.user?.updateDisplayName(name);
 
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Registration Successful')));
@@ -25,6 +29,7 @@ class AuthServices {
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
+
 
   static signinUser(String email, String password, BuildContext context) async {
     try {
