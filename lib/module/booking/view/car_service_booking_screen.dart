@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
+import 'package:ichiban_auto/backend/car_booking_data_post.dart';
+import 'package:ichiban_auto/backend/car_booking_model.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
+import 'package:ichiban_auto/module/booking/controller/booking_data_controller.dart';
 
-import '../../const/dynamic_font.dart';
+import '../../../const/dynamic_font.dart';
 
 class CarServiceForm extends StatefulWidget {
   const CarServiceForm({super.key});
@@ -13,12 +20,11 @@ class CarServiceForm extends StatefulWidget {
 
 class CarServiceFormState extends State<CarServiceForm> {
   final _formKey = GlobalKey<FormState>();
-  String? carMake, carModel, carYear, registrationPlate;
-  String? customerName, phoneNumber, email;
-  String? bookingTitle;
+
+  BookingDataController bookingDataController = Get.put(BookingDataController());
   DateTime? startDateTime, endDateTime;
-  String? assignedMechanic;
   List<String> mechanics = ['Mechanic A', 'Mechanic B', 'Mechanic C'];
+  String? assignedMechanicController;
 
   Future<void> _selectDateTime(BuildContext context, bool isStart) async {
     final DateTime? picked = await showDatePicker(
@@ -58,11 +64,11 @@ class CarServiceFormState extends State<CarServiceForm> {
               )),
               ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
+                controller: bookingDataController.carMakeController,
                 decoration: const InputDecoration(
                   labelText: 'Brand',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => carMake = value,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -70,7 +76,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Model',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => carModel = value,
+                controller: bookingDataController.carModelController,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -78,7 +84,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Year',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => carYear = value,
+                controller: bookingDataController.carYearController,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -86,7 +92,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Registration Plate',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => registrationPlate = value,
+                controller: bookingDataController.registrationPlateController,
               ),
               const SizedBox(height: 16),
 
@@ -98,7 +104,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Customer name',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => customerName = value,
+                controller: bookingDataController.customerNameController,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -107,7 +113,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
-                onSaved: (value) => phoneNumber = value,
+                controller: bookingDataController.phoneNumberController,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -116,7 +122,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
-                onSaved: (value) => email = value,
+                controller: bookingDataController.emailController,
               ),
 
 
@@ -129,7 +135,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Booking Title',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (value) => bookingTitle = value,
+                controller: bookingDataController.bookingTitleController,
               ),
               const SizedBox(height: 10),
               Container(
@@ -180,46 +186,56 @@ class CarServiceFormState extends State<CarServiceForm> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    assignedMechanic = value;
+                    assignedMechanicController =  value;
                   });
                 },
               ),
               const SizedBox(height: 16),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColors.baseColorRed,
-                      AppColors.baseColorRed,
-                    ], // Replace with your desired gradient colors
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              InkWell(
+                onTap: () async{
+                  await CarBookingDataPost.inti();
+                  SmartDialog.showLoading();
+                  final carBookingDataMap = {
+                    CarBookingModel.brand : bookingDataController.carMakeController.text,
+                    CarBookingModel.model : bookingDataController.carModelController.text,
+                    CarBookingModel.year : bookingDataController.carYearController.text,
+                    CarBookingModel.registration : bookingDataController.registrationPlateController.text,
+                    CarBookingModel.customerName : bookingDataController.customerNameController.text,
+                    CarBookingModel.customerNumber : bookingDataController.phoneNumberController.text,
+                    CarBookingModel.customerEmail : bookingDataController.emailController.text,
+                    CarBookingModel.bookingTitle : bookingDataController.bookingTitleController.text,
+                    CarBookingModel.startDate : startDateTime.toString(),
+                    CarBookingModel.endDate : endDateTime.toString(),
+                    CarBookingModel.assignMechanic : assignedMechanicController.toString(),
+                  };
+                  await CarBookingDataPost.insert([carBookingDataMap]);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.baseColorRed,
+                        AppColors.baseColorRed,
+                      ], // Replace with your desired gradient colors
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.baseColorGrey,
+                        offset: Offset(2, 2.5)
+                      )
+                    ]
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.baseColorGrey,
-                      offset: Offset(2, 2.5)
-                    )
-                  ]
-                ),
-                child: InkWell(
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      // Process the form data
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Booking Submitted')));
-                    }
-                  },
                   child: Text('Submit',
                     style: TextStyle(color: Colors.white,
                       fontSize: TextSize.font22(context),
                       fontWeight: FontWeight.w800
                     ),
-                    
+
                   ),
                 ),
               ),
