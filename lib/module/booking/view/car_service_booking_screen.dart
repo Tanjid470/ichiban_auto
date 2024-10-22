@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:ichiban_auto/backend/car_booking_data_post.dart';
+import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/module/booking/model/car_booking_model.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
@@ -48,8 +49,13 @@ class CarServiceFormState extends State<CarServiceForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Car Servicing Booking'),
+        title: Text('Car Servicing Booking',
+        style: customSize(TextSize.font20(context),AppColors.baseColorRed),),
         centerTitle: true,
+        surfaceTintColor: AppColors.baseColorRed,
+        leading:  InkWell(
+          onTap: () => Get.back(),
+            child: Icon(Icons.arrow_back_ios_new_rounded,color: AppColors.baseColorRed,)) ,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,11 +63,9 @@ class CarServiceFormState extends State<CarServiceForm> {
           key: _formKey,
           child: ListView(
             children: [
-              Text("Car Details", style: TextStyle(fontSize: TextSize.font22(context),
-                  fontWeight: FontWeight.bold,
-                color: AppColors.baseColorRed,
-
-              )),
+              Text("Car Details",
+                  style: customStyleTitle(TextSize.font20(context))
+              ),
               ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 controller: bookingDataController.carMakeController,
@@ -69,6 +73,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                   labelText: 'Brand',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -77,6 +85,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 controller: bookingDataController.carModelController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -85,6 +97,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 controller: bookingDataController.carYearController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -93,11 +109,15 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 controller: bookingDataController.registrationPlateController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 16),
 
               // Customer Details Section
-              Text("Customer Details", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              Text("Customer Details",  style: customStyleTitle(TextSize.font20(context))),
               ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 decoration: const InputDecoration(
@@ -105,6 +125,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 controller: bookingDataController.customerNameController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -114,6 +138,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                 ),
                 keyboardType: TextInputType.phone,
                 controller: bookingDataController.phoneNumberController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -123,12 +151,16 @@ class CarServiceFormState extends State<CarServiceForm> {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 controller: bookingDataController.emailController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
 
 
               // Booking Details Section
               const SizedBox(height: 10),
-              Text("Booking Details", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              Text("Booking Details",  style: customStyleTitle(TextSize.font20(context))),
               ResponsiveScale.of(context).verticalGap(context, 1.5),
               TextFormField(
                 decoration: const InputDecoration(
@@ -136,6 +168,10 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 controller: bookingDataController.bookingTitleController,
+                onChanged: (value) {
+                  bookingDataController.submitButtonEnable();
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 10),
               Container(
@@ -171,7 +207,7 @@ class CarServiceFormState extends State<CarServiceForm> {
               const SizedBox(height: 16),
 
               // Mechanic Assignment Section
-              Text("Assign Mechanic", style: TextStyle(fontSize: TextSize.font22(context),color: AppColors.baseColorRed, fontWeight: FontWeight.bold)),
+              Text("Assign Mechanic", style: customStyleTitle(TextSize.font20(context))),
               ResponsiveScale.of(context).verticalGap(context, 1.5),
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
@@ -190,62 +226,99 @@ class CarServiceFormState extends State<CarServiceForm> {
                   });
                 },
               ),
-              const SizedBox(height: 16),
-              InkWell(
-                onTap: () async {
-                  SmartDialog.showLoading();
-                  await CarBookingDataPost.inti();
-                  final carBookingDataMap = {
-                    CarBookingModel.brand : bookingDataController.carMakeController.text,
-                    CarBookingModel.model : bookingDataController.carModelController.text,
-                    CarBookingModel.year : bookingDataController.carYearController.text,
-                    CarBookingModel.registration : bookingDataController.registrationPlateController.text,
-                    CarBookingModel.customerName : bookingDataController.customerNameController.text,
-                    CarBookingModel.customerNumber : bookingDataController.phoneNumberController.text,
-                    CarBookingModel.customerEmail : bookingDataController.emailController.text,
-                    CarBookingModel.bookingTitle : bookingDataController.bookingTitleController.text,
-                    CarBookingModel.startDate : startDateTime.toString(),
-                    CarBookingModel.endDate : endDateTime.toString(),
-                    CarBookingModel.assignMechanic : assignedMechanicController.toString(),
-                  };
-                  await CarBookingDataPost.insert([carBookingDataMap]);
-                  bookingDataController.clearAllControllers();
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.baseColorRed,
-                        AppColors.baseColorRed,
-                      ], // Replace with your desired gradient colors
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.baseColorGrey,
-                        offset: Offset(2, 2.5)
-                      )
-                    ]
-                  ),
-                  child: Text('Submit',
-                    style: TextStyle(color: Colors.white,
-                      fontSize: TextSize.font22(context),
-                      fontWeight: FontWeight.w800
-                    ),
+              const SizedBox(height: 100),
 
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
 
             ],
           ),
         ),
       ),
+      floatingActionButton: SafeArea(child: submitButton(context)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  Widget submitButton(BuildContext context) {
+    return bookingDataController.buttonEnable.value
+        ? InkWell(
+              onTap: () async {
+                SmartDialog.showLoading();
+                await CarBookingDataPost.inti();
+                final carBookingDataMap = {
+                  CarBookingModel.brand : bookingDataController.carMakeController.text,
+                  CarBookingModel.model : bookingDataController.carModelController.text,
+                  CarBookingModel.year : bookingDataController.carYearController.text,
+                  CarBookingModel.registration : bookingDataController.registrationPlateController.text,
+                  CarBookingModel.customerName : bookingDataController.customerNameController.text,
+                  CarBookingModel.customerNumber : bookingDataController.phoneNumberController.text,
+                  CarBookingModel.customerEmail : bookingDataController.emailController.text,
+                  CarBookingModel.bookingTitle : bookingDataController.bookingTitleController.text,
+                  CarBookingModel.startDate : startDateTime.toString(),
+                  CarBookingModel.endDate : endDateTime.toString(),
+                  CarBookingModel.assignMechanic : assignedMechanicController.toString(),
+                };
+                await CarBookingDataPost.insert([carBookingDataMap]);
+                bookingDataController.clearAllControllers();
+                bookingDataController.submitButtonEnable();
+                setState(() {
+                });
+              },
+              child: Container(
+                height: 45,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.baseColorRed,
+                      AppColors.baseColorRed,
+                    ], // Replace with your desired gradient colors
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.baseColorGrey,
+                      offset: const Offset(2, 2)
+                    )
+                  ]
+                ),
+                child: Text('Submit',
+                  style: TextStyle(color: Colors.white,
+                    fontSize: TextSize.font22(context),
+                    fontWeight: FontWeight.w800
+                  ),
+                ),
+              ),
+          )
+        : InkWell(
+            onTap: () async {
+              SmartDialog.showToast('Fill al required data');
+            },
+            child: Container(
+              height: 45,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.baseColorGrey,
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.baseColorGrey,
+                        offset: const Offset(2, 2)
+                    )
+                  ]
+              ),
+              child: Text('Submit',
+                style: TextStyle(color: Colors.white,
+                    fontSize: TextSize.font22(context),
+                    fontWeight: FontWeight.w800
+                ),
+              ),
+            ),
+          );
   }
 }
