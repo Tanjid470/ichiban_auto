@@ -39,7 +39,7 @@ class AuthServices {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password did not match')));
       } else if (exception.code == 'invalid-credential') {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('The supplied credential is invalid or has expired')));
+            const SnackBar(content: Text('No user Found with this Email & Password')));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("${exception.message}")));
