@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_color.dart';
+import 'package:ichiban_auto/const/app_text_style.dart';
 
 import '../../../const/dynamic_font.dart';
 import '../../booking/view/car_service_booking_screen.dart';
@@ -30,8 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               icon: const Icon(Icons.logout))
         ],
-        title: const Text('Dashboard'),
+        title:  Text('Dashboard',
+          style: customSize(TextSize.font24(context),AppColors.baseColorRed),
+
+        ),
         centerTitle: true,
+        titleSpacing: 10,
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
