@@ -9,6 +9,11 @@ TextStyle customSize(double size, Color color) => TextStyle(
       color: color,
       letterSpacing: 5,
     );
+TextStyle customSizeWithoutLetterSpacing(double size, Color color) => TextStyle(
+  fontSize: size,
+  fontWeight: FontWeight.bold,
+  color: color,
+);
 
 TextStyle customStyleTitle(double size) => TextStyle(
       fontSize: size,
