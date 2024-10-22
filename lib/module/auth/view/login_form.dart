@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:ichiban_auto/config/responsive_scale.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/module/auth/service/firebase_auth.dart';
@@ -173,37 +174,13 @@ class _LoginFormState extends State<LoginForm> {
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                GestureDetector(
+                                InkWell(
                                   onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor:
-                                              const Color.fromARGB(255, 241, 238, 238),
-                                          title: const Text(''),
-                                          content: Text(
-                                            'This feature not added yet.',
-                                            style: customSize(18, Colors.black),
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                // Perform an action when the user taps the button
-                                                Navigator.of(context)
-                                                    .pop(); // Close the dialog
-                                              },
-                                              child: const Text('Close'),
-                                            ),
-                                            // Add more buttons or actions as needed
-                                          ],
-                                        );
-                                      },
-                                    );
+                                    SmartDialog.showToast("Upcoming feature....");
                                   },
                                   child: Text(
                                     "Forget password?",
-                                    style: customSize(15, Colors.black87),
+                                    style: customSizeWithoutLetterSpacing(15, Colors.black87),
                                   ),
                                 ),
                               ],
@@ -249,7 +226,7 @@ class _LoginFormState extends State<LoginForm> {
                             login
                                 ? "Don't have an account? "
                                 : "Already have an account?",
-                            style: customSize(16, Colors.black87),
+                            style: customSizeWithoutLetterSpacing(16, Colors.black87),
                           ),
                           InkWell(
                             onTap: () {
@@ -259,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
                             },
                             child: Text(
                               login ? " Signup" : " Login",
-                              style: customSize(16, Colors.blue),
+                              style: customSizeWithoutLetterSpacing(16, Colors.blue),
                             ),
                           ),
                         ],
