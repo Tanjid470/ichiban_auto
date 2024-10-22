@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookingDataController extends GetxController{
+  RxBool buttonEnable =false.obs;
+
   TextEditingController carMakeController = TextEditingController();
   TextEditingController carModelController = TextEditingController();
   TextEditingController carYearController = TextEditingController();
@@ -11,6 +13,16 @@ class BookingDataController extends GetxController{
   TextEditingController emailController = TextEditingController();
   TextEditingController bookingTitleController = TextEditingController();
 
+  submitButtonEnable(){
+    buttonEnable.value = carMakeController.text.isNotEmpty &&
+        carModelController.text.isNotEmpty &&
+        carYearController.text.isNotEmpty &&
+        registrationPlateController.text.isNotEmpty &&
+        customerNameController.text.isNotEmpty &&
+        phoneNumberController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        bookingTitleController.text.isNotEmpty;
+  }
   void clearAllControllers() {
     carMakeController.clear();
     carModelController.clear();
