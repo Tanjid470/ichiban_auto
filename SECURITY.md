@@ -1,21 +1,22 @@
 # Security Policy
 
-## Supported Versions
+ ```bash
+class GoogleSheetInit{
+  static const _credentials = r'''
+  {
+   YOUR_GOOGLE_API_KEY
+  }
+  ''';
+  static const _spreadSheetId = YOUR_SHEET_ID;
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
-
-## Reporting a Vulnerability
-
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+  static final gSheets = GSheets(_credentials);
+  late var spreadSheet;
+  Future inti() async{
+    try{
+       spreadSheet = await gSheets.spreadsheet(_spreadSheetId);
+    }
+    catch(exception){
+      log("Init error : $exception");
+    }
+  }
+}
