@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/const/dynamic_font.dart';
+import 'package:ichiban_auto/module/calendar/controller/data_get_view_controller.dart';
+import 'package:ichiban_auto/module/calendar/view/data_get.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({super.key});
@@ -14,18 +16,8 @@ class CalendarView extends StatefulWidget {
 }
 
 class _CalendarViewState extends State<CalendarView> {
-  late DateTime _selectedDate;
 
-  @override
-  void initState() {
-    super.initState();
-    _resetSelectedDate();
-  }
-
-  void _resetSelectedDate() {
-    _selectedDate = DateTime.now().add(const Duration(days: 2));
-  }
-
+  DataGetViewController dataGetViewController =Get.put(DataGetViewController());
   int l = 0;
   @override
   Widget build(BuildContext context) {
@@ -50,10 +42,10 @@ class _CalendarViewState extends State<CalendarView> {
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                 child: CalendarTimeline(
                   showYears: true,
-                  initialDate: _selectedDate,
+                  initialDate: dataGetViewController.selectedDate,
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(const Duration(days: 365 * 4)),
-                  onDateSelected: (date) => setState(() => _selectedDate = date),
+                  onDateSelected: (date) => setState(() => dataGetViewController.selectedDate = date),
                   leftMargin: 20,
                   monthColor: AppColors.baseColorGrey,
                   dayColor: AppColors.baseColorGrey,
@@ -90,7 +82,7 @@ class _CalendarViewState extends State<CalendarView> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => setState(() => _resetSelectedDate()),
+                    onTap: () => setState(() => dataGetViewController.reselectedDate()),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15,left: 15),
                       child: Container(
@@ -99,7 +91,7 @@ class _CalendarViewState extends State<CalendarView> {
                           border: Border.all(
                             color: AppColors.baseColorRed
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(10))
+                          borderRadius: const BorderRadius.all(Radius.circular(10))
                         ),
                         child: Text(
                             'Today',
@@ -112,11 +104,22 @@ class _CalendarViewState extends State<CalendarView> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: Center(
-                  child: Text(
-                    'Selected date is $_selectedDate',
-                    style:
-                        const TextStyle(color: Color.fromARGB(255, 32, 180, 165)),
+                child: Container(
+                  color: Colors.red,
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Selected date is ${dataGetViewController.selectedDate}',
+                            style:
+                                const TextStyle(color: Color.fromARGB(255, 32, 180, 165)),
+                          ),
+                          const CalenderWiseView()
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               )
