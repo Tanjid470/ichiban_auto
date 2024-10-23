@@ -7,7 +7,9 @@ import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/const/dynamic_font.dart';
 import 'package:ichiban_auto/module/calendar/controller/data_get_view_controller.dart';
-import 'package:ichiban_auto/module/calendar/view/data_get.dart';
+
+
+import 'date_wise_booking_view.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({super.key});
@@ -105,7 +107,6 @@ class _CalendarViewState extends State<CalendarView> {
               const SizedBox(height: 20),
               Expanded(
                 child: Container(
-                  color: Colors.red,
                   child: SingleChildScrollView(
                     child: Center(
                       child: Column(
