@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           duration: 100,
           animationDuration: Duration(seconds: 2),
           splashTransition: SplashTransition.rotationTransition,
-          backgroundColor: AppColors.themeColorShade200,
+          backgroundColor: AppColors.baseColorRedShade100,
           nextScreen: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
