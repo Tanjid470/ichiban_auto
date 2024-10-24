@@ -10,6 +10,11 @@ class CarBookingDataGet {
 
   static List<BookingGetModel> carBookingDataGet = [];
 
+  static DateTime dateFromExcel(String excelDate) {
+    final epoch = DateTime(1899, 12, 30); // Excel's epoch is 30th Dec 1899
+    return epoch.add(Duration(days: int.parse(excelDate)));
+  }
+
 
 
   static Future<bool> initAndFetchData() async {
@@ -34,18 +39,16 @@ class CarBookingDataGet {
             'customerNumber': row[5],
             'customerEmail': row[6],
             'bookingTitle': row[7],
-            'startDate': row[8],
-            'endDate': row[9],
+            'startDate': dateFromExcel(row[8]).toString(),
+            'endDate': dateFromExcel(row[9]).toString(),
             'assignMechanic': row[10],
           };
-          log(row[9].toString());
-          // final endDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(row[9]));
-          // log(endDate.toString());
-          // if (endDate == today) {
-          //   log(bookingData.toString());
-          //   carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
-          // }
-          carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
+          String endDateTime = dateFromExcel(row[9]).toString();
+          final endDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(endDateTime));
+          if (endDate == today) {
+            carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
+          }
+          //carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
         }
         log("Data fetched successfully. Total bookings for today: ${carBookingDataGet.length}");
       } else {
