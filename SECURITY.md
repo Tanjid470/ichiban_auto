@@ -1,5 +1,5 @@
 # Security Policy
-
+*Avoiding pushing Google credentials to GitHub for security reasons. In the class I attached, ensure that the credentials (e.g., API keys) are stored securely. Instead of hardcoding them, use environment variables or secret management services to inject them dynamically. This prevents accidental exposure of sensitive information when sharing or pushing code to repositories like GitHub.*
  ```bash
 class GoogleSheetInit{
   static const _credentials = r'''
