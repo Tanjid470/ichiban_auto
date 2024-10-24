@@ -104,26 +104,9 @@ class _CalendarViewState extends State<CalendarView> {
                   ),
                 ],
               ),
+              
               const SizedBox(height: 20),
-              Expanded(
-                child: Container(
-                  child: SingleChildScrollView(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Selected date is ${dataGetViewController.selectedDate}',
-                            style:
-                                const TextStyle(color: Color.fromARGB(255, 32, 180, 165)),
-                          ),
-                          const CalenderWiseView()
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
+              Expanded(child: const CalenderWiseView())
             ],
           ),
         ),

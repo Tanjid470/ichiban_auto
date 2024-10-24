@@ -45,7 +45,21 @@ class _CalenderWiseViewState extends State<CalenderWiseView> {
             shrinkWrap: true,
             itemCount: CarBookingDataGet.carBookingDataGet.length,
             itemBuilder: (context, index) {
-            return Card(child: Text(CarBookingDataGet.carBookingDataGet[index].registration.toString()));
+            return Card(child: Column(
+              children: [
+                Text(CarBookingDataGet.carBookingDataGet[index].brand.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].model.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].year.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].registration.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].customerName.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].customerNumber.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].customerEmail.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].bookingTitle.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].startDate.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].endDate.toString()),
+                Text(CarBookingDataGet.carBookingDataGet[index].assignMechanic.toString()),
+              ],
+            ));
           },);
   }
 }
