@@ -16,13 +16,16 @@ class CarBookingDataGet {
   static List<BookingGetModel> carBookingDataGet = [];
 
   static DateTime dateFromExcel(String excelDate) {
-    final epoch = DateTime(1899, 12, 30); // Excel's epoch is 30th Dec 1899
+    final epoch = DateTime(1899, 12, 30);
     return epoch.add(Duration(days: int.parse(excelDate)));
   }
 
 
    Future<bool> initAndFetchData(DateTime selectedDate) async {
     try {
+      dataGetViewController.isLoading.value = true;
+      carBookingDataGet.clear();
+
       final spreadSheet = await GoogleSheetInit().inti();
       _carBookingDataGet = await _getWorkSheet(spreadSheet, sheetName: 'CarBooking');
 
