@@ -12,6 +12,8 @@ class BookingDataController extends GetxController{
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController bookingTitleController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
 
   submitButtonEnable(){
     buttonEnable.value = carMakeController.text.isNotEmpty &&
@@ -21,7 +23,9 @@ class BookingDataController extends GetxController{
         customerNameController.text.isNotEmpty &&
         phoneNumberController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
-        bookingTitleController.text.isNotEmpty;
+        bookingTitleController.text.isNotEmpty &&
+        startDateController.text.isNotEmpty &&
+        endDateController.text.isNotEmpty;
   }
   void clearAllControllers() {
     carMakeController.clear();
@@ -32,6 +36,8 @@ class BookingDataController extends GetxController{
     phoneNumberController.clear();
     emailController.clear();
     bookingTitleController.clear();
+    startDateController.clear();
+    endDateController.clear();
   }
 
   @override
