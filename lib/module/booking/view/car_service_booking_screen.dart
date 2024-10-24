@@ -38,8 +38,12 @@ class CarServiceFormState extends State<CarServiceForm> {
       setState(() {
         if (isStart) {
           startDateTime = picked;
+          bookingDataController.startDateController.text = picked.toString();
+          bookingDataController.submitButtonEnable();
         } else {
           endDateTime = picked;
+          bookingDataController.endDateController.text = picked.toString();
+          bookingDataController.submitButtonEnable();
         }
       });
     }
@@ -137,6 +141,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
+                maxLength: 11,
                 controller: bookingDataController.phoneNumberController,
                 onChanged: (value) {
                   bookingDataController.submitButtonEnable();
@@ -182,7 +187,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                 child: ListTile(
                   title: Text(startDateTime == null
                       ? 'Select Start DateTime'
-                      : 'Start: ${startDateTime.toString()}'),
+                      : 'Start: ${bookingDataController.startDateController.text}'),
                   trailing: const Icon(Icons.calendar_today),
                   onTap: () => _selectDateTime(context, true),
                 ),
@@ -197,7 +202,7 @@ class CarServiceFormState extends State<CarServiceForm> {
                   title: Text(
                     endDateTime == null
                         ? 'Select End DateTime'
-                        : 'End: ${endDateTime.toString()}',
+                        : 'End: ${bookingDataController.startDateController.text}',
                   ),
                   trailing: const Icon(Icons.calendar_month_sharp),
                   onTap: () => _selectDateTime(context, false),
