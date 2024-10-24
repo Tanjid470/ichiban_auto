@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:ichiban_auto/module/calendar/controller/data_get_view_controller.dart';
 import 'package:ichiban_auto/module/calendar/model/car_booking_get_model.dart';
 import 'google_sheet_init.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +10,8 @@ import 'package:intl/intl.dart';
 class CarBookingDataGet {
 
   static Worksheet? _carBookingDataGet;
+
+  DataGetViewController dataGetViewController = Get.put(DataGetViewController());
 
   static List<BookingGetModel> carBookingDataGet = [];
 
@@ -16,8 +21,7 @@ class CarBookingDataGet {
   }
 
 
-
-  static Future<bool> initAndFetchData() async {
+   Future<bool> initAndFetchData(DateTime selectedDate) async {
     try {
       final spreadSheet = await GoogleSheetInit().inti();
       _carBookingDataGet = await _getWorkSheet(spreadSheet, sheetName: 'CarBooking');
@@ -26,8 +30,7 @@ class CarBookingDataGet {
         final rows = await _carBookingDataGet!.values.allRows();
         final dataRows = rows.skip(1);
 
-
-        final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+        final today = DateFormat('yyyy-MM-dd').format(selectedDate);
         log(today.toString());
         for (var row in dataRows) {
           final bookingData = {
@@ -48,15 +51,18 @@ class CarBookingDataGet {
           if (endDate == today) {
             carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
           }
-          //carBookingDataGet.add(BookingGetModel.fromJson(bookingData));
         }
+        dataGetViewController.isLoading.value = false;
         log("Data fetched successfully. Total bookings for today: ${carBookingDataGet.length}");
-      } else {
-        log("CarBooking worksheet not found.");
+      }
+      else {
+        dataGetViewController.isLoading.value = false;
+        SmartDialog.showToast("CarBooking worksheet not found.");
       }
       return true;
     } catch (exception) {
       log("Error fetching booking data: $exception");
+      dataGetViewController.isLoading.value = false;
       return true;
     }
   }
