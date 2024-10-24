@@ -12,17 +12,18 @@ This Flutter application allows users to manage car service bookings, including 
    - Different user roles for mechanics and admins.
 
 2. **Create Booking for Car Servicing**
+ - Save bookings in a Google Sheet.
    - Admins can create car service bookings with the following details:
-     - **Car Details**: Make, Model, Year, Registration Plate.
-     - **Customer Details**: Name, Phone Number, Email.
-     - Booking title, start datetime, and end datetime.
-     - Assign a mechanic.
-   - Save bookings in a database (Firebase or other backend).
+     - *Car Details*: Make, Model, Year, Registration Plate.
+     - *Customer Details*: Name, Phone Number, Email.
+     - *Booking title*, start datetime, and end datetime.
+     -  Assign a mechanic.
+
 
 3. **Calendar View of Bookings**
-   - Integrate a calendar UI component to display all service bookings.
-   - Show booking details upon selection.
-   - Mechanic's view to display jobs assigned to them.
+   - Integrate a calendar UI component to display date wise service bookings.
+   - Show booking details upon date selection.
+
 
 ## Installation
 
