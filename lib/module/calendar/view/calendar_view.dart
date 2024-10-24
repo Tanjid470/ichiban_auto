@@ -116,7 +116,7 @@ class _CalendarViewState extends State<CalendarView> {
               ),
               
               const SizedBox(height: 20),
-              const Expanded(child: CalenderWiseView())
+              const Expanded(child: Center(child: CalenderWiseView()))
             ],
           ),
         ),
