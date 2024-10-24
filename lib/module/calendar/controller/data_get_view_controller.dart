@@ -7,4 +7,6 @@ class DataGetViewController extends GetxController{
      DateTime reselectedDate() {
        return selectedDate = DateTime.now();
      }
+
+     RxBool isLoading = true.obs;
 }
