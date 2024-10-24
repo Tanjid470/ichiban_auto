@@ -94,7 +94,10 @@ class _CalendarViewState extends State<CalendarView> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => setState(() => dataGetViewController.reselectedDate()),
+                    onTap: () {
+                      fetchStudentData(DateTime.now());
+                      setState(() => dataGetViewController.reselectedDate());
+                      },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15,left: 15),
                       child: Container(
@@ -116,7 +119,7 @@ class _CalendarViewState extends State<CalendarView> {
               ),
               
               const SizedBox(height: 20),
-              const Expanded(child: Center(child: CalenderWiseView()))
+              const Expanded(child: CalenderWiseView())
             ],
           ),
         ),
