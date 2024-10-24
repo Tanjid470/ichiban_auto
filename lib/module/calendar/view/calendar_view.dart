@@ -3,6 +3,7 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:ichiban_auto/backend/car_booking_data_get.dart';
 import 'package:ichiban_auto/const/app_color.dart';
 import 'package:ichiban_auto/const/app_text_style.dart';
 import 'package:ichiban_auto/const/dynamic_font.dart';
@@ -20,6 +21,11 @@ class CalendarView extends StatefulWidget {
 class _CalendarViewState extends State<CalendarView> {
 
   DataGetViewController dataGetViewController =Get.put(DataGetViewController());
+
+  void fetchStudentData(DateTime selectedDate) async {
+    await CarBookingDataGet().initAndFetchData(selectedDate);
+  }
+
   int l = 0;
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,10 @@ class _CalendarViewState extends State<CalendarView> {
                   initialDate: dataGetViewController.selectedDate,
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(const Duration(days: 365 * 4)),
-                  onDateSelected: (date) => setState(() => dataGetViewController.selectedDate = date),
+                  onDateSelected: (date){
+                                  fetchStudentData(date);
+                                  setState(() => dataGetViewController.selectedDate = date);
+                                },
                   leftMargin: 20,
                   monthColor: AppColors.baseColorGrey,
                   dayColor: AppColors.baseColorGrey,
@@ -56,6 +65,7 @@ class _CalendarViewState extends State<CalendarView> {
                   shrink: false,
                   activeBackgroundDayColor:AppColors.baseColorRed,
                   locale: 'en',
+
                 ),
               ),
 
@@ -106,7 +116,7 @@ class _CalendarViewState extends State<CalendarView> {
               ),
               
               const SizedBox(height: 20),
-              Expanded(child: const CalenderWiseView())
+              const Expanded(child: CalenderWiseView())
             ],
           ),
         ),
